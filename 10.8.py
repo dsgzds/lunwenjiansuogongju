@@ -1,4 +1,6 @@
 import random
+
+
 import requests
 from bs4 import BeautifulSoup
 import flask
@@ -97,18 +99,38 @@ for item5 in date:
     db.commit()
 print('数据插入成功')
 
-def chaxun():
-    while 1:
-      shuru = input('输入（输入“退出”退出）')
-      if shuru == '退出':
-          break
-      else:
-          word = '%' + shuru + '%'
-          cur.execute("select * from shuju where 标题 like '%%%s%%'" % (word))
-          data = cur.fetchall()
-          print(data)
+# def chaxun():
+#     while 1:
+#       shuru = input('输入（输入“退出”退出）')
+#       if shuru == '退出':
+#           break
+#       else:
+#           word = '%' + shuru + '%'
+#           cur.execute("select * from shuju where 标题 like '%%%s%%'" % (word))
+#           data = cur.fetchall()
+#           print(data)
+#
+# if __name__ == '__main__':
+#     chaxun()
+
+from flask import Flask,request
+from flask import render_template
+
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    conn = pymysql.connect(host='localhost', user='root', password='123187', port=3306,
+                           db='lw')
+    cur = conn.cursor()
+    word = request.form.get("chaxun")
+    cur.execute("select * from shuju where 标题 like '%%%s%%'" % (word))
+    u = cur.fetchall()
+    conn.close()
+    return render_template('index.html', u=u)
 
 if __name__ == '__main__':
-    chaxun()
+    app.debug = True
+    app.run(port=8003)
 
 db.close()

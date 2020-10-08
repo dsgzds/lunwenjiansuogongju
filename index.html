@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>查询结果</title>
+</head>
+<body>
+
+  <table class="table table-bordered">
+
+    查询: <input type="text" name="chaxun" />
+    <input type="submit" name="chazhao" value="Search" />
+
+  <tr>
+    <th>u</th>
+
+  </tr>
+    {% for i in u %}
+      <tr>
+        <td>{{ i[0] }}</td>
+
+      </tr>
+    {% endfor %}
+  </table>
+
+</body>
+</html>
